@@ -8,7 +8,9 @@
 
 -- {{{ Main
 theme = {}
-theme.wallpaper = "~/Pictures/bg.jpg"
+
+-- theme.wallpaper = io.popen("ls ~/Pictures/bg/*.jpg | sort -R | tail -1"):read("*a");
+   theme.wallpaper = "~/Pictures/bg.jpg"
 -- }}}
 
 -- {{{ Styles
