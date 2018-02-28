@@ -283,6 +283,7 @@ globalkeys = awful.util.table.join(
               end),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end),
+	-- Slock screen locker
     awful.key({modkey}, "l", function () awful.util.spawn("slock") end)
 )
 
@@ -475,11 +476,11 @@ autorunApps =
 {
    "emacs",
    "terminator",
+   -- timed screen lock
+   "xautolock -time 2 -locker slock"
 }
 if autorun then
    for app = 1, #autorunApps do
        awful.util.spawn(autorunApps[app])
    end
 end
-
--- Standard program
