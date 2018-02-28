@@ -58,6 +58,7 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
+    awful.layout.suit.max,
     awful.layout.suit.floating,
     awful.layout.suit.tile,
 --    awful.layout.suit.tile.left,
@@ -67,7 +68,6 @@ local layouts =
 --    awful.layout.suit.fair.horizontal,
 --    awful.layout.suit.spiral,
 --    awful.layout.suit.spiral.dwindle,
---    awful.layout.suit.max,
 --    awful.layout.suit.max.fullscreen,
 --    awful.layout.suit.magnifier
 }
@@ -87,7 +87,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "Emacs", "Terminator", "Web", "File", 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ "Emacs", "Terminator", "Web", "File", "VMs", 6, 7, 8, 9 }, s, layouts[1])
 end
 -- }}}
 
@@ -466,3 +466,17 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- Autorun programs
+-- must set target tag !!
+autorun = true
+autorunApps =
+{
+   "emacs",
+   "terminator",
+}
+if autorun then
+   for app = 1, #autorunApps do
+       awful.util.spawn(autorunApps[app])
+   end
+end
