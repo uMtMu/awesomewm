@@ -272,7 +272,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey },            "d",     function () mypromptbox[mouse.screen]:run() end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -304,7 +304,13 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
-        end)
+        end),
+    awful.key({ "Mod1" }, "Escape",
+    	function ()
+	    -- If you want to always position the menu on the same place set coordinates
+    	    awful.menu.menu_keys.down = { "Down", "Alt_L" }
+    	    awful.menu.clients({theme = { width = 250 }}, { keygrabber=true, coords={x=525, y=330} })
+    	end)
 )
 
 -- Bind all key numbers to tags.
@@ -371,13 +377,17 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
-                     buttons = clientbuttons } },
+                     buttons = clientbuttons,
+		     size_hints_honor = false } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    -- Set Terminator to always map on tags number 3 of screen 1.
+    { rule = { class = "Terminator" },
+      properties = { tag = tags[1][2] } },
     -- Set Firefox to always map on tags number 3 of screen 1.
     { rule = { class = "Firefox" },
       properties = { tag = tags[1][3] } },
@@ -387,9 +397,18 @@ awful.rules.rules = {
     -- Set Opera to always map on tags number 3 of screen 1.
     { rule = { class = "Opera" },
       properties = { tag = tags[1][3] } },
+    -- Set Xfe to always map on tags number 4 of screen 1.
+    { rule = { class = "Xfe" },
+      properties = { tag = tags[1][4] } },
     -- Set Thunar to always map on tags number 4 of screen 1.
     { rule = { class = "Thunar" },
       properties = { tag = tags[1][4] } },
+    -- Set VirtualBox to always map on tags number 5 of screen 1.
+    { rule = { class = "VirtualBox" },
+      properties = { tag = tags[1][5] } },
+    -- Set VirtualBox to always map on tags number 5 of screen 1.
+    { rule = { class = "Code" },
+      properties = { tag = tags[1][6] } },
 }
 -- }}}
 
@@ -477,7 +496,8 @@ autorunApps =
    "emacs",
    "terminator",
    -- timed screen lock
-   "xautolock -time 2 -locker slock"
+   "xautolock -time 2 -locker slock",
+   "firefox",
 }
 if autorun then
    for app = 1, #autorunApps do
