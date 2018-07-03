@@ -14,6 +14,7 @@ local menubar = require("menubar")
 -- Load Debian menu entries
 require("debian.menu")
 
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -58,8 +59,8 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
-    awful.layout.suit.max,
     awful.layout.suit.floating,
+    awful.layout.suit.max,
     awful.layout.suit.tile,
 --    awful.layout.suit.tile.left,
 --    awful.layout.suit.tile.bottom,
@@ -310,7 +311,13 @@ clientkeys = awful.util.table.join(
 	    -- If you want to always position the menu on the same place set coordinates
     	    awful.menu.menu_keys.down = { "Down", "Alt_L" }
     	    awful.menu.clients({theme = { width = 250 }}, { keygrabber=true, coords={x=525, y=330} })
-    	end)
+    	end),
+    awful.key({ modkey,           }, "s",     
+                    function (c) 
+                        c.sticky = not c.sticky
+                        c.ontop = not c.ontop
+                        end
+                        )
 )
 
 -- Bind all key numbers to tags.
