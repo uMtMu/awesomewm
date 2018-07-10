@@ -59,8 +59,8 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
-    awful.layout.suit.floating,
     awful.layout.suit.max,
+    awful.layout.suit.floating,
     awful.layout.suit.tile,
 --    awful.layout.suit.tile.left,
 --    awful.layout.suit.tile.bottom,
@@ -385,7 +385,9 @@ awful.rules.rules = {
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
-		     size_hints_honor = false } },
+                     size_hints_honor = false 
+                 } },
+-- }}}
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
@@ -416,6 +418,7 @@ awful.rules.rules = {
     -- Set VirtualBox to always map on tags number 5 of screen 1.
     { rule = { class = "Code" },
       properties = { tag = tags[1][6] } },
+-- }}}
 }
 -- }}}
 
@@ -495,19 +498,4 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- Autorun programs
--- must set target tag !!
-autorun = true
-autorunApps =
-{
-   "emacs",
-   "terminator",
-   -- timed screen lock
-   "xautolock -time 2 -locker slock",
-   "firefox",
-}
-if autorun then
-   for app = 1, #autorunApps do
-       awful.util.spawn(autorunApps[app])
-   end
-end
+awful.util.spawn("~/.config/awesome/autorun.sh")
