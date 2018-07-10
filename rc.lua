@@ -285,7 +285,9 @@ globalkeys = awful.util.table.join(
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end),
 	-- Slock screen locker
-    awful.key({modkey}, "l", function () awful.util.spawn("slock") end)
+    awful.key({modkey}, "l", function () awful.util.spawn("slock") end),
+    -- Shutter ScreenShoter
+    awful.key({ }, "Print", function () awful.util.spawn("shutter -s") end)
 )
 
 clientkeys = awful.util.table.join(
