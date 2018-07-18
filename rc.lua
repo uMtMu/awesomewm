@@ -59,8 +59,8 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
-    awful.layout.suit.max,
     awful.layout.suit.floating,
+    awful.layout.suit.max,
     awful.layout.suit.tile,
 --    awful.layout.suit.tile.left,
 --    awful.layout.suit.tile.bottom,
@@ -88,6 +88,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
+    -- tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
     tags[s] = awful.tag({ "Emacs", "Terminator", "Web", "File", "VMs", "Dev", 7, 8, 9 }, s, layouts[1])
 end
 -- }}}
@@ -270,7 +271,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
+    -- {{{ disabled to use with emacsclient spawn
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
+    -- }}}
 
     -- Prompt
     awful.key({ modkey },            "d",     function () mypromptbox[mouse.screen]:run() end),
@@ -287,7 +290,9 @@ globalkeys = awful.util.table.join(
 	-- Slock screen locker
     awful.key({modkey}, "l", function () awful.util.spawn("slock") end),
     -- Shutter ScreenShoter
-    awful.key({ }, "Print", function () awful.util.spawn("shutter -s") end)
+    awful.key({ }, "Print", function () awful.util.spawn("shutter -s") end),
+    -- Emacs Client Spawn
+    awful.key({ modkey, "Control" }, "n", function () awful.util.spawn("emacsclient -c -a emacs") end)
 )
 
 clientkeys = awful.util.table.join(
@@ -389,7 +394,7 @@ awful.rules.rules = {
                      buttons = clientbuttons,
                      size_hints_honor = false 
                  } },
--- }}}
+    -- }}}
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
@@ -500,4 +505,4 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-awful.util.spawn("~/.config/awesome/autorun.sh")
+awful.util.spawn(os.getenv("HOME") .. "/.config/awesome/autorun.sh")
